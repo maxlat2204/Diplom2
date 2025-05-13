@@ -7,7 +7,6 @@ import org.junit.After;
 import org.junit.Before;
 import praktikum.user.UserModel;
 
-import static io.restassured.RestAssured.given;
 import static java.net.HttpURLConnection.HTTP_ACCEPTED;
 import static praktikum.steps.UserSteps.deletedUserStep;
 
@@ -27,6 +26,5 @@ public class BaseApiTest {
                     .statusCode(HTTP_ACCEPTED);
         }
     }
-
 
 }

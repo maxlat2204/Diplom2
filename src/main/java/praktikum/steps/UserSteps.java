@@ -33,7 +33,6 @@ public class UserSteps {
                 .then().log().all();
     }
 
-
     @Step("Залогинить пользователя")
     public static ValidatableResponse loginUserStep(UserModel user) {
         return given()
@@ -46,7 +45,7 @@ public class UserSteps {
     }
 
     @Step("Изменить данные пользователя")
-    public static ValidatableResponse userAuthorization(UserModel user, String accessToken) {
+    public static ValidatableResponse changeUserStep(UserModel user, String accessToken) {
         return given()
                 .log().all()
                 .contentType(ContentType.JSON)
@@ -56,4 +55,5 @@ public class UserSteps {
                 .patch(USER_OPTIONS_DEL_PATH)
                 .then().log().all();
     }
+
 }

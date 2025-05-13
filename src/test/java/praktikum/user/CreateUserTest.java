@@ -6,7 +6,6 @@ import org.junit.Test;
 import praktikum.BaseApiTest;
 import praktikum.EnvBody;
 
-import static io.restassured.RestAssured.given;
 import static java.net.HttpURLConnection.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static praktikum.EnvConfig.*;
@@ -24,8 +23,6 @@ public class CreateUserTest extends BaseApiTest {
                 .extract()
                 .path(EnvBody.BODY_ACCESS_TOKEN);
     }
-
-
 
     @Test
     @DisplayName("Негативный тест на создание одинаковых пользователей")

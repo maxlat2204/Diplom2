@@ -7,7 +7,6 @@ import org.junit.Test;
 import praktikum.BaseApiTest;
 import praktikum.EnvBody;
 
-import static io.restassured.RestAssured.given;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -35,7 +34,7 @@ public class ChangeDataUserTest extends BaseApiTest {
     @DisplayName("Позитивный тест на изменение данных пользователя")
     @Description("Успешно меняем данные пользователя: почту и имя пользователя")
     public void changeDataUser(){
-        userAuthorization(user, accessToken)
+        changeUserStep(user, accessToken)
                 .statusCode(HTTP_OK)
                 .body(EnvBody.BODY_SUCCESS, equalTo(true),
                          "user.email", equalTo(emailChange),
@@ -50,9 +49,10 @@ public class ChangeDataUserTest extends BaseApiTest {
     public void changeDataNoAuthorizationUserNegativeTest(){
         String accessTokenNoValid = "noValidToken";//создали не валидный токен, чтобы не прошла авторизация
 
-        userAuthorization(user, accessTokenNoValid)
+        changeUserStep(user, accessTokenNoValid)
                 .statusCode(HTTP_UNAUTHORIZED)
                 .body(EnvBody.BODY_SUCCESS, equalTo(false),
                         EnvBody.BODY_MESSAGE, equalTo(EnvBody.ERROR_YOU_SHOULD_BE_AUTHORISED));
     }
+
 }

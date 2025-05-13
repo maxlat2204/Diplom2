@@ -7,7 +7,6 @@ import org.junit.Test;
 import praktikum.BaseApiTest;
 import praktikum.EnvBody;
 
-import static io.restassured.RestAssured.given;
 import static java.net.HttpURLConnection.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static praktikum.steps.UserSteps.createUserStep;
