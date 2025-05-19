@@ -2,6 +2,7 @@ package praktikum.order;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import org.junit.Before;
 import org.junit.Test;
 import praktikum.BaseApiTest;
 import praktikum.EnvBody;
@@ -22,10 +23,18 @@ public class CreateOrderTest extends BaseApiTest {
     private final List<String> ingredients = List.of("61c0c5a71d1f82001bdaaa6d");
     OrderModel order = new OrderModel(ingredients);
 
+    @Before
+    public void createUser(){
+        //Создаем пользователя
+        accessToken = createUserStep(user)
+                .statusCode(HTTP_OK)
+                .extract().path(EnvBody.BODY_ACCESS_TOKEN);
+    }
+
     @Test
     @DisplayName("Позитивный тест на создание заказа без авторизации")
     @Description("Проверяем что заказ создается без авторизации")
-    public void createOrderNoAuthorization(){
+    public void createOrderNoAuthorizationTest(){
         //Делаем заказ без авторизации
         createOrderNoAuthUserStep(order)
                 .statusCode(HTTP_OK)
@@ -36,12 +45,7 @@ public class CreateOrderTest extends BaseApiTest {
     @Test
     @DisplayName("Позитивный тест на создание заказа с авторизацией")
     @Description("Проверяем что заказ создается, через авторизированного пользователя")
-    public void createOrderAuthorizationUser(){
-        //Создаем пользователя
-        accessToken = createUserStep(user)
-                .statusCode(HTTP_OK)
-                .extract().path(EnvBody.BODY_ACCESS_TOKEN);
-
+    public void createOrderAuthorizationUserTest(){
         //Делаем заказ через созданного пользователя
         createOrderAuthUserSteps(order, accessToken)
                 .statusCode(HTTP_OK)
@@ -53,12 +57,12 @@ public class CreateOrderTest extends BaseApiTest {
     @Test
     @DisplayName("Негативный тест на создание заказа с пустым запросом")
     @Description("Проверяем что заказ с пустым запросом не создается")
-    public void createOrderNoIngredients(){
+    public void createOrderNoIngredientsTest(){
         List<String> noIngredients = List.of();//Создали пустой список
         order.setIngredients(noIngredients);//Передали этот список в заказ
 
         //Пытаемся создать заказ с пустым запросом
-        createOrderNoAuthUserStep(order)
+        createOrderAuthUserSteps(order, accessToken)
                 .statusCode(HTTP_BAD_REQUEST)
                 .body(EnvBody.BODY_SUCCESS, equalTo(false),
                         BODY_MESSAGE, equalTo("Ingredient ids must be provided"));
@@ -67,11 +71,11 @@ public class CreateOrderTest extends BaseApiTest {
     @Test
     @DisplayName("Негативный тест на создание заказа с неверным хешем ингредиентов")
     @Description("Проверяем что появится ошибка 500, при заказе с неверным хешем ингредиентов")
-    public void createOrderNoValidIngredients(){
+    public void createOrderNoValidIngredientsTest(){
         List<String> noValidIngredients = List.of("abv");
         order.setIngredients(noValidIngredients);
 
-        createOrderNoAuthUserStep(order)
+        createOrderAuthUserSteps(order, accessToken)
                 .statusCode(HTTP_INTERNAL_ERROR);
     }
 
