@@ -16,7 +16,7 @@ public class CreateUserTest extends BaseApiTest {
     @Test
     @DisplayName("Позитивный тест на создание пользователя")
     @Description("Создаем пользователя с валидными данными")
-    public void createUser(){
+    public void createUserTest(){
         accessToken = createUserStep(user)
                 .statusCode(HTTP_OK)
                 .body(EnvBody.BODY_SUCCESS, equalTo(true))
