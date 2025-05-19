@@ -22,7 +22,7 @@ public class LoginUserTest extends BaseApiTest {
                 .extract()
                 .path(EnvBody.BODY_ACCESS_TOKEN);
 
-        user.setName(null);//убрали у пользователя параметр name, чтобы логиниться
+//        user.setName(null);//убрали у пользователя параметр name, чтобы логиниться
     }
 
     @Test
