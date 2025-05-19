@@ -1,8 +1,6 @@
 package praktikum;
 
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
 import praktikum.user.UserModel;
