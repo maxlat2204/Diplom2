@@ -26,22 +26,31 @@ public class ChangeDataUserTest extends BaseApiTest {
                 .path(EnvBody.BODY_ACCESS_TOKEN);
 
         user.setPassword(null);//убрали у пользователя параметр password, чтобы менять данные пользователя
-        user.setEmail(emailChange);//изменили почту
-        user.setName(nameChange);// изменили имя пользователя
     }
 
     @Test
     @DisplayName("Позитивный тест на изменение данных пользователя")
-    @Description("Успешно меняем данные пользователя: почту и имя пользователя")
-    public void changeDataUser(){
+    @Description("Успешно меняем данные пользователя: почту пользователя")
+    public void changeDataEmailUserTest(){
+        user.setEmail(emailChange);//изменили почту
         changeUserStep(user, accessToken)
                 .statusCode(HTTP_OK)
                 .body(EnvBody.BODY_SUCCESS, equalTo(true),
                          "user.email", equalTo(emailChange),
-                        "user.name", equalTo(nameChange));
+                        "user.name", equalTo(USER_NAME));
     }
 
-
+    @Test
+    @DisplayName("Позитивный тест на изменение данных пользователя")
+    @Description("Успешно меняем данные пользователя: имя пользователя")
+    public void changeDataNameUserTest(){
+        user.setName(nameChange);// изменили имя пользователя
+        changeUserStep(user, accessToken)
+                .statusCode(HTTP_OK)
+                .body(EnvBody.BODY_SUCCESS, equalTo(true),
+                        "user.email", equalTo(USER_EMAIL),
+                        "user.name", equalTo(nameChange));
+    }
 
     @Test
     @DisplayName("Негативный тест на изменение данных пользователя без авторизации")
